@@ -160,7 +160,7 @@
       const lineas = data.split('\n');
       const select = document.getElementById('socio');
       lineas.forEach(linea => {
-        const [nombre, ci] = linea.split(',');
+        const [nombre, ci] = linea.split(';');
         if(nombre && ci){
           const option = document.createElement('option');
           option.value = ci.trim();
