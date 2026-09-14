@@ -153,22 +153,24 @@
   </form>
 
   <!-- Script para cargar socios desde CSV -->
-  <script>
-    fetch('lista_socios.csv')
-      .then(response => response.text())
-      .then(data => {
-        const lineas = data.split('\n');
-        const select = document.getElementById('socio');
-        lineas.slice(1).forEach(linea => { // ignora encabezado si existe
-          const [nombre, ci] = linea.split(',');
-          if(nombre && ci){
-            const option = document.createElement('option');
-            option.value = ci.trim();
-            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
-            select.appendChild(option);
-          }
-        });
+<script>
+  fetch('lista_socios.csv')
+    .then(response => response.text())
+    .then(data => {
+      const lineas = data.split('\n');
+      const select = document.getElementById('socio');
+      lineas.slice(1).forEach(linea => { // 👈 ignora encabezado
+        const columnas = linea.split(',');
+        const nombre = columnas[1]; // columna 2 = nombre
+        const ci = columnas[2];     // columna 3 = cédula
+        if(nombre && ci){
+          const option = document.createElement('option');
+          option.value = ci.trim();
+          option.textContent = `${nombre.trim()} — ${ci.trim()}`;
+          select.appendChild(option);
+        }
       });
-  </script>
-</body>
-</html>
+    })
+    .catch(error => console.error('Error al cargar lista de socios:', error));
+</script>
+
