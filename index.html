@@ -1,81 +1,158 @@
-<form id="formDenuncia">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Denuncia Sindical</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 40px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    legend {
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    label {
+      display: inline-block;
+      width: 180px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: calc(100% - 200px);
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    textarea[name="descripcion"] {
+      width: 100%;
+      min-height: 120px;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    button:hover {
+      background-color: #1a252f;
+    }
+  </style>
+</head>
+<body>
   <h2>Formulario de Denuncia Sindical</h2>
 
-  <!-- DATOS DEL DENUNCIANTE -->
-  <fieldset>
-    <legend>Datos del denunciante</legend>
-    <label>Nombre y apellido:</label>
-    <input type="text" name="denunciante" required>
+  <form id="formDenuncia">
+    <!-- DATOS DEL DENUNCIANTE -->
+    <fieldset>
+      <legend>Datos del denunciante</legend>
+      <label>Nombre y apellido:</label>
+      <input type="text" name="denunciante" required>
 
-    <label>Cédula de identidad:</label>
-    <input type="text" name="ci">
+      <label>Cédula de identidad:</label>
+      <input type="text" name="ci">
 
-    <label>Dependencia / institución:</label>
-    <input type="text" name="dependencia">
+      <label>Dependencia / institución:</label>
+      <input type="text" name="dependencia">
 
-    <label>Teléfono:</label>
-    <input type="text" name="telefono">
+      <label>Teléfono:</label>
+      <input type="text" name="telefono">
 
-    <label>Correo electrónico:</label>
-    <input type="email" name="correo">
-  </fieldset>
+      <label>Correo electrónico:</label>
+      <input type="email" name="correo">
+    </fieldset>
 
-  <!-- DATOS DE LA DENUNCIA -->
-  <fieldset>
-    <legend>Datos de la denuncia</legend>
-    <label>Tipo de denuncia:</label>
-    <select name="tipo">
-      <option>Derechos laborales</option>
-      <option>Salarios y beneficios</option>
-      <option>Horarios / jornada laboral</option>
-      <option>Vacaciones / permisos</option>
-      <option>Acoso laboral</option>
-      <option>Violencia o maltrato</option>
-      <option>Discriminación</option>
-      <option>Represalia sindical</option>
-      <option>Seguridad y condiciones de trabajo</option>
-      <option>Abuso de autoridad</option>
-      <option>Irregularidad administrativa</option>
-      <option>Conflicto sindical</option>
-      <option>Otros</option>
-    </select>
+    <!-- DATOS DE LA DENUNCIA -->
+    <fieldset>
+      <legend>Datos de la denuncia</legend>
+      <label>Tipo de denuncia:</label>
+      <select name="tipo">
+        <option>Derechos laborales</option>
+        <option>Salarios y beneficios</option>
+        <option>Horarios / jornada laboral</option>
+        <option>Vacaciones / permisos</option>
+        <option>Acoso laboral</option>
+        <option>Violencia o maltrato</option>
+        <option>Discriminación</option>
+        <option>Represalia sindical</option>
+        <option>Seguridad y condiciones de trabajo</option>
+        <option>Abuso de autoridad</option>
+        <option>Irregularidad administrativa</option>
+        <option>Conflicto sindical</option>
+        <option>Otros</option>
+      </select>
 
-    <label>Descripción de los hechos:</label>
-    <textarea name="descripcion" rows="4"></textarea>
+      <label>Descripción de los hechos:</label>
+      <textarea name="descripcion"></textarea>
 
-    <label>Prioridad:</label>
-    <select name="prioridad">
-      <option>Alta / Urgente</option>
-      <option>Media / Importante</option>
-      <option>Baja / Ordinaria</option>
-    </select>
+      <label>Prioridad:</label>
+      <select name="prioridad">
+        <option>Alta / Urgente</option>
+        <option>Media / Importante</option>
+        <option>Baja / Ordinaria</option>
+      </select>
 
-    <label>Derivado a:</label>
-    <select name="responsable">
-      <option>Víctor Manuel García Amarilla</option>
-      <option>Félix Rubén Giménez Duarte</option>
-      <option>Jessica Carolina Ortiz Sánchez</option>
-      <option>Raúl Zarza</option>
-      <option>Roger Adrián Eracles Lezcano Vera</option>
-      <option>Gustavo David Aguilera Mendoza</option>
-      <option>Melissa Beatriz Sánchez García</option>
-      <option>Fernando Daniel Morales Zarza</option>
-      <option>Cesar Villarreo Legal</option>
-      <option>Alfredo Abdón Coronel</option>
-      <option>Miguel María Rolón Mendoza</option>
-    </select>
-  </fieldset>
+      <label>Derivado a:</label>
+      <select name="responsable">
+        <option>Víctor Manuel García Amarilla</option>
+        <option>Félix Rubén Giménez Duarte</option>
+        <option>Jessica Carolina Ortiz Sánchez</option>
+        <option>Raúl Zarza</option>
+        <option>Roger Adrián Eracles Lezcano Vera</option>
+        <option>Gustavo David Aguilera Mendoza</option>
+        <option>Melissa Beatriz Sánchez García</option>
+        <option>Fernando Daniel Morales Zarza</option>
+        <option>Cesar Villarreo Legal</option>
+        <option>Alfredo Abdón Coronel</option>
+        <option>Miguel María Rolón Mendoza</option>
+      </select>
+    </fieldset>
 
-  <!-- USO EXCLUSIVO DEL SINDICATO -->
-  <fieldset disabled>
-    <legend>Uso exclusivo del sindicato</legend>
-    <label>Código asignado:</label>
-    <input type="text" name="codigo">
-    <label>Responsable asignado:</label>
-    <input type="text" name="responsableSindicato">
-    <label>Estado inicial:</label>
-    <input type="text" name="estado" value="Recibida">
-  </fieldset>
+    <!-- USO EXCLUSIVO DEL SINDICATO -->
+    <fieldset disabled>
+      <legend>Uso exclusivo del sindicato</legend>
+      <label>Código asignado:</label>
+      <input type="text" name="codigo">
 
-  <button type="submit">Enviar denuncia</button>
-</form>
+      <label>Responsable asignado:</label>
+      <input type="text" name="responsableSindicato">
+
+      <label>Estado inicial:</label>
+      <input type="text" name="estado" value="Recibida">
+    </fieldset>
+
+    <button type="submit">Enviar denuncia</button>
+  </form>
+</body>
+</html>
