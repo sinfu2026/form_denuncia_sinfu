@@ -1,0 +1,81 @@
+<form id="formDenuncia">
+  <h2>Formulario de Denuncia Sindical</h2>
+
+  <!-- DATOS DEL DENUNCIANTE -->
+  <fieldset>
+    <legend>Datos del denunciante</legend>
+    <label>Nombre y apellido:</label>
+    <input type="text" name="denunciante" required>
+
+    <label>Cédula de identidad:</label>
+    <input type="text" name="ci">
+
+    <label>Dependencia / institución:</label>
+    <input type="text" name="dependencia">
+
+    <label>Teléfono:</label>
+    <input type="text" name="telefono">
+
+    <label>Correo electrónico:</label>
+    <input type="email" name="correo">
+  </fieldset>
+
+  <!-- DATOS DE LA DENUNCIA -->
+  <fieldset>
+    <legend>Datos de la denuncia</legend>
+    <label>Tipo de denuncia:</label>
+    <select name="tipo">
+      <option>Derechos laborales</option>
+      <option>Salarios y beneficios</option>
+      <option>Horarios / jornada laboral</option>
+      <option>Vacaciones / permisos</option>
+      <option>Acoso laboral</option>
+      <option>Violencia o maltrato</option>
+      <option>Discriminación</option>
+      <option>Represalia sindical</option>
+      <option>Seguridad y condiciones de trabajo</option>
+      <option>Abuso de autoridad</option>
+      <option>Irregularidad administrativa</option>
+      <option>Conflicto sindical</option>
+      <option>Otros</option>
+    </select>
+
+    <label>Descripción de los hechos:</label>
+    <textarea name="descripcion" rows="4"></textarea>
+
+    <label>Prioridad:</label>
+    <select name="prioridad">
+      <option>Alta / Urgente</option>
+      <option>Media / Importante</option>
+      <option>Baja / Ordinaria</option>
+    </select>
+
+    <label>Derivado a:</label>
+    <select name="responsable">
+      <option>Víctor Manuel García Amarilla</option>
+      <option>Félix Rubén Giménez Duarte</option>
+      <option>Jessica Carolina Ortiz Sánchez</option>
+      <option>Raúl Zarza</option>
+      <option>Roger Adrián Eracles Lezcano Vera</option>
+      <option>Gustavo David Aguilera Mendoza</option>
+      <option>Melissa Beatriz Sánchez García</option>
+      <option>Fernando Daniel Morales Zarza</option>
+      <option>Cesar Villarreo Legal</option>
+      <option>Alfredo Abdón Coronel</option>
+      <option>Miguel María Rolón Mendoza</option>
+    </select>
+  </fieldset>
+
+  <!-- USO EXCLUSIVO DEL SINDICATO -->
+  <fieldset disabled>
+    <legend>Uso exclusivo del sindicato</legend>
+    <label>Código asignado:</label>
+    <input type="text" name="codigo">
+    <label>Responsable asignado:</label>
+    <input type="text" name="responsableSindicato">
+    <label>Estado inicial:</label>
+    <input type="text" name="estado" value="Recibida">
+  </fieldset>
+
+  <button type="submit">Enviar denuncia</button>
+</form>
