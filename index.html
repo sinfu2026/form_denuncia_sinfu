@@ -116,27 +116,25 @@
       <label>Descripción de los hechos:</label>
       <textarea name="descripcion"></textarea>
 
-      <label>Prioridad:</label>
-      <select name="prioridad">
-        <option>Alta / Urgente</option>
-        <option>Media / Importante</option>
-        <option>Baja / Ordinaria</option>
-      </select>
+     <!-- PRIORIDAD (solo lectura) -->
+<label>Prioridad:</label>
+<input type="text" name="prioridad" value="(Asignado por Comisión)" readonly>
 
-      <label>Derivado a:</label>
-      <select name="responsable">
-        <option>Víctor Manuel García Amarilla</option>
-        <option>Félix Rubén Giménez Duarte</option>
-        <option>Jessica Carolina Ortiz Sánchez</option>
-        <option>Raúl Zarza</option>
-        <option>Roger Adrián Eracles Lezcano Vera</option>
-        <option>Gustavo David Aguilera Mendoza</option>
-        <option>Melissa Beatriz Sánchez García</option>
-        <option>Fernando Daniel Morales Zarza</option>
-        <option>Cesar Villarreo Legal</option>
-        <option>Alfredo Abdón Coronel</option>
-        <option>Miguel María Rolón Mendoza</option>
-      </select>
+<!-- DERIVADO A (solo lectura con cargos) -->
+<label>Derivado a:</label>
+<select name="responsable" disabled>
+  <option>Víctor Manuel García Amarilla — Secretario General</option>
+  <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
+  <option>Jessica Carolina Ortiz Sánchez — Secretaria de Notas</option>
+  <option>Raúl Zarza — Secretario de Finanzas</option>
+  <option>Roger Adrián Eracles Lezcano Vera — Secretario de Juventud</option>
+  <option>Gustavo David Aguilera Mendoza — Secretario de Educación</option>
+  <option>Melissa Beatriz Sánchez García — Secretaria de Organización</option>
+  <option>Fernando Daniel Morales Zarza — Secretario de Comunicación</option>
+  <option>Cesar Villarreo Legal — Secretario de Conflictos</option>
+  <option>Alfredo Abdón Coronel — Secretario Intergremial</option>
+  <option>Miguel María Rolón Mendoza — Secretario Interinstitucional</option>
+</select>
     </fieldset>
 
     <!-- USO EXCLUSIVO DEL SINDICATO -->
