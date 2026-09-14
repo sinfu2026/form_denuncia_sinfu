@@ -159,10 +159,8 @@
     .then(data => {
       const lineas = data.split('\n');
       const select = document.getElementById('socio');
-      lineas.slice(1).forEach(linea => { // 👈 ignora encabezado
-        const columnas = linea.split(',');
-        const nombre = columnas[1]; // columna 2 = nombre
-        const ci = columnas[2];     // columna 3 = cédula
+      lineas.forEach(linea => {
+        const [nombre, ci] = linea.split(',');
         if(nombre && ci){
           const option = document.createElement('option');
           option.value = ci.trim();
@@ -173,4 +171,5 @@
     })
     .catch(error => console.error('Error al cargar lista de socios:', error));
 </script>
+
 
