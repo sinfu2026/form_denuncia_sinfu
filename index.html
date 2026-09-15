@@ -121,32 +121,32 @@
 
       <!-- DERIVADO A (solo lectura con cargos) -->
       <label>Derivado a:</label>
-      <select name="responsable" disabled>
-        <option>Víctor Manuel García Amarilla — Secretario General</option>
-        <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
-        <option>Jessica Carolina Ortiz Sánchez — Secretaria de Notas</option>
-        <option>Raúl Zarza — Secretario de Finanzas</option>
-        <option>Roger Adrián Eracles Lezcano Vera — Secretario de Juventud</option>
-        <option>Gustavo David Aguilera Mendoza — Secretario de Educación</option>
-        <option>Melissa Beatriz Sánchez García — Secretaria de Organización</option>
-        <option>Fernando Daniel Morales Zarza — Secretario de Comunicación</option>
-        <option>Cesar Villarreo Legal — Secretario de Conflictos</option>
-        <option>Alfredo Abdón Coronel — Secretario Intergremial</option>
-        <option>Miguel María Rolón Mendoza — Secretario Interinstitucional</option>
+      <select name="responsable" readonly>
+        <option>Víctor Manuel García Amarilla      — Secretario General</option>
+        <option>Félix Rubén Giménez Duarte         — Secretario Adjunto</option>
+        <option>Jessica Carolina Ortiz Sánchez     — Secretaria de Notas</option>
+        <option>Raúl Zarza                         — Secretario de Finanzas</option>
+        <option>Roger Adrián Eracles Lezcano Vera  — Secretario de Juventud</option>
+        <option>Gustavo David Aguilera Mendoza     — Secretario de Educación</option>
+        <option>Melissa Beatriz Sánchez García     — Secretaria de Organización</option>
+        <option>Fernando Daniel Morales Zarza      — Secretario de Comunicación</option>
+        <option>Cesar Villarreo Legal              — Secretario de Conflictos</option>
+        <option>Alfredo Abdón Coronel              — Secretario Intergremial</option>
+        <option>Miguel María Rolón Mendoza         — Secretario Interinstitucional</option>
       </select>
     </fieldset>
 
     <!-- USO EXCLUSIVO DEL SINDICATO -->
-    <fieldset disabled>
+    <fieldset>
       <legend>Uso exclusivo del sindicato</legend>
       <label>Código asignado:</label>
-      <input type="text" name="codigo">
+      <input type="text" name="codigo" readonly>
 
       <label>Responsable asignado:</label>
-      <input type="text" name="responsableSindicato">
+      <input type="text" name="responsableSindicato" readonly>
 
       <label>Estado inicial:</label>
-      <input type="text" name="estado" value="Recibida">
+      <input type="text" name="estado" value="Recibida" readonly>
     </fieldset>
 
     <button type="submit">Enviar denuncia</button>
@@ -186,8 +186,14 @@
         headers: { "Content-Type": "application/json" }
       })
       .then(res => res.text())
-      .then(msg => alert("Denuncia enviada correctamente ✅"))
-      .catch(err => alert("Error al enviar ❌"));
+      .then(msg => {
+        if (msg === "OK") {
+          alert("✅ Denuncia registrada correctamente");
+        } else {
+          alert("⚠️ Error en la respuesta del servidor: " + msg);
+        }
+      })
+      .catch(err => alert("❌ Error al enviar: " + err));
     });
   </script>
 </body>
