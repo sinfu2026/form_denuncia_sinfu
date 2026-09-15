@@ -1,3 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Denuncia Sindical</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 40px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    legend {
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    label {
+      display: inline-block;
+      width: 180px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: calc(100% - 200px);
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    textarea[name="descripcion"] {
+      width: 100%;
+      min-height: 120px;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    button:hover {
+      background-color: #1a252f;
+    }
+  </style>
+</head>
+<body>
+  <h2>Formulario de Denuncia Sindical</h2>
 <form id="formDenuncia" method="POST" action="https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0">
   <!-- Campo oculto para fecha -->
   <input type="hidden" name="FECHA">
