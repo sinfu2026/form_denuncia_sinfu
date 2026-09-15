@@ -172,29 +172,21 @@
       .catch(error => console.error('Error al cargar lista de socios:', error));
   </script>
 
-  <!-- Script para enviar datos a Google Sheets -->
-  <script>
-    document.getElementById("formDenuncia").addEventListener("submit", function(e){
-      e.preventDefault();
-      const formData = new FormData(this);
-      const data = {};
-      formData.forEach((value, key) => data[key] = value);
+  <!-- Script para enviar datos a Sheet.best -->
+<script>
+  document.getElementById("formDenuncia").addEventListener("submit", function(e){
+    e.preventDefault();
+    const formData = new FormData(this);
 
-      fetch(this.action, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => res.text())
-      .then(msg => {
-        if (msg === "OK") {
-          alert("✅ Denuncia registrada correctamente");
-        } else {
-          alert("⚠️ Error en la respuesta del servidor: " + msg);
-        }
-      })
-      .catch(err => alert("❌ Error al enviar: " + err));
-    });
-  </script>
+    fetch(this.action, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.text())
+    .then(msg => alert("✅ Denuncia enviada correctamente"))
+    .catch(err => alert("❌ Error al enviar: " + err));
+  });
+</script>
+
 </body>
 </html>
