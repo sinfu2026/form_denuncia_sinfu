@@ -1,182 +1,104 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Formulario de Denuncia Sindical</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background-color: #f4f6f8;
-      margin: 40px;
-    }
+<form id="formDenuncia" method="POST" action="https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0">
+  <!-- Campo oculto para fecha -->
+  <input type="hidden" name="FECHA">
 
-    h2 {
-      color: #2c3e50;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+  <!-- DATOS DEL DENUNCIANTE -->
+  <fieldset>
+    <legend>Datos del denunciante</legend>
+    <label>Socio (Nombre - Cédula):</label>
+    <select id="socio" name="SOCIO" required>
+      <option value="">Seleccione su nombre</option>
+    </select>
 
-    fieldset {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+    <label>Dependencia / institución:</label>
+    <input type="text" name="DEPENDENCIA">
 
-    legend {
-      font-weight: bold;
-      color: #34495e;
-    }
+    <label>Teléfono:</label>
+    <input type="text" name="TELEFONO">
 
-    label {
-      display: inline-block;
-      width: 180px;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
+    <label>Correo electrónico:</label>
+    <input type="email" name="CORREO">
+  </fieldset>
 
-    input, select, textarea {
-      width: calc(100% - 200px);
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+  <!-- DATOS DE LA DENUNCIA -->
+  <fieldset>
+    <legend>Datos de la denuncia</legend>
+    <label>Tipo de denuncia:</label>
+    <select name="TIPO_DENUNCIA">
+      <option>Derechos laborales</option>
+      <option>Salarios y beneficios</option>
+      <option>Horarios / jornada laboral</option>
+      <option>Vacaciones / permisos</option>
+      <option>Acoso laboral</option>
+      <option>Violencia o maltrato</option>
+      <option>Discriminación</option>
+      <option>Represalia sindical</option>
+      <option>Seguridad y condiciones de trabajo</option>
+      <option>Abuso de autoridad</option>
+      <option>Irregularidad administrativa</option>
+      <option>Conflicto sindical</option>
+      <option>Otros</option>
+    </select>
 
-    textarea {
-      resize: vertical;
-    }
+    <label>Descripción de los hechos:</label>
+    <textarea name="DESCRIPCION"></textarea>
 
-    textarea[name="descripcion"] {
-      width: 100%;
-      min-height: 120px;
-    }
+    <label>Prioridad:</label>
+    <input type="text" name="PRIORIDAD" value="(Asignado por Comisión)" readonly>
 
-    button {
-      background-color: #2c3e50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 15px;
-      display: block;
-      margin: 0 auto;
-    }
+    <label>Derivado a:</label>
+    <select name="RESPONSABLE" disabled>
+      <option value="Elegir" selected>Elegir</option>
+      <option>Víctor Manuel García Amarilla — Secretario General</option>
+      <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
+      <option>Jessica Carolina Ortiz Sánchez — Secretaria de Notas</option>
+      <option>Raúl Zarza — Secretario de Finanzas</option>
+      <option>Roger Adrián Eracles Lezcano Vera — Secretario de Juventud</option>
+      <option>Gustavo David Aguilera Mendoza — Secretario de Educación</option>
+      <option>Melissa Beatriz Sánchez García — Secretaria de Organización</option>
+      <option>Fernando Daniel Morales Zarza — Secretario de Comunicación</option>
+      <option>Cesar Villarreo Legal — Secretario de Conflictos</option>
+      <option>Alfredo Abdón Coronel — Secretario Intergremial</option>
+      <option>Miguel María Rolón Mendoza — Secretario Interinstitucional</option>
+    </select>
+  </fieldset>
 
-    button:hover {
-      background-color: #1a252f;
-    }
-  </style>
-</head>
-<body>
-  <h2>Formulario de Denuncia Sindical</h2>
+  <!-- USO EXCLUSIVO DEL SINDICATO -->
+  <fieldset>
+    <legend>Uso exclusivo del sindicato</legend>
+    <label>Estado inicial:</label>
+    <input type="text" name="ESTADO" value="Recibida" readonly>
+  </fieldset>
 
-  <form id="formDenuncia" method="POST" action="https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0">
-    <!-- DATOS DEL DENUNCIANTE -->
-    <fieldset>
-      <legend>Datos del denunciante</legend>
-      <label>Socio (Nombre - Cédula):</label>
-      <select id="socio" name="socio" required>
-        <option value="">Seleccione su nombre</option>
-      </select>
+  <button type="submit">Enviar denuncia</button>
+</form>
 
-      <label>Dependencia / institución:</label>
-      <input type="text" name="dependencia">
+<!-- Script para cargar socios desde CSV -->
+<script>
+  fetch('lista_socios.csv')
+    .then(response => response.text())
+    .then(data => {
+      const lineas = data.split('\n');
+      const select = document.getElementById('socio');
+      lineas.forEach(linea => {
+        const [nombre, ci] = linea.split(';');
+        if(nombre && ci){
+          const option = document.createElement('option');
+          option.value = `${nombre.trim()} — ${ci.trim()}`;
+          option.textContent = `${nombre.trim()} — ${ci.trim()}`;
+          select.appendChild(option);
+        }
+      });
+    })
+    .catch(error => console.error('Error al cargar lista de socios:', error));
+</script>
 
-      <label>Teléfono:</label>
-      <input type="text" name="telefono">
-
-      <label>Correo electrónico:</label>
-      <input type="email" name="correo">
-    </fieldset>
-
-    <!-- DATOS DE LA DENUNCIA -->
-    <fieldset>
-      <legend>Datos de la denuncia</legend>
-      <label>Tipo de denuncia:</label>
-      <select name="tipo">
-        <option>Derechos laborales</option>
-        <option>Salarios y beneficios</option>
-        <option>Horarios / jornada laboral</option>
-        <option>Vacaciones / permisos</option>
-        <option>Acoso laboral</option>
-        <option>Violencia o maltrato</option>
-        <option>Discriminación</option>
-        <option>Represalia sindical</option>
-        <option>Seguridad y condiciones de trabajo</option>
-        <option>Abuso de autoridad</option>
-        <option>Irregularidad administrativa</option>
-        <option>Conflicto sindical</option>
-        <option>Otros</option>
-      </select>
-
-      <label>Descripción de los hechos:</label>
-      <textarea name="descripcion"></textarea>
-
-      <!-- PRIORIDAD (solo lectura) -->
-      <label>Prioridad:</label>
-      <input type="text" name="prioridad" value="(Asignado por Comisión)" readonly>
-
-      <!-- DERIVADO A (solo lectura con cargos) -->
-      <label>Derivado a:</label>
-      <select name="responsable" readonly>
-        <option>Víctor Manuel García Amarilla      — Secretario General</option>
-        <option>Félix Rubén Giménez Duarte         — Secretario Adjunto</option>
-        <option>Jessica Carolina Ortiz Sánchez     — Secretaria de Notas</option>
-        <option>Raúl Zarza                         — Secretario de Finanzas</option>
-        <option>Roger Adrián Eracles Lezcano Vera  — Secretario de Juventud</option>
-        <option>Gustavo David Aguilera Mendoza     — Secretario de Educación</option>
-        <option>Melissa Beatriz Sánchez García     — Secretaria de Organización</option>
-        <option>Fernando Daniel Morales Zarza      — Secretario de Comunicación</option>
-        <option>Cesar Villarreo Legal              — Secretario de Conflictos</option>
-        <option>Alfredo Abdón Coronel              — Secretario Intergremial</option>
-        <option>Miguel María Rolón Mendoza         — Secretario Interinstitucional</option>
-      </select>
-    </fieldset>
-
-    <!-- USO EXCLUSIVO DEL SINDICATO -->
-    <fieldset>
-      <legend>Uso exclusivo del sindicato</legend>
-      <label>Código asignado:</label>
-      <input type="text" name="codigo" readonly>
-
-      <label>Responsable asignado:</label>
-      <input type="text" name="responsableSindicato" readonly>
-
-      <label>Estado inicial:</label>
-      <input type="text" name="estado" value="Recibida" readonly>
-    </fieldset>
-
-    <button type="submit">Enviar denuncia</button>
-  </form>
-
-  <!-- Script para cargar socios desde CSV -->
-  <script>
-    fetch('lista_socios.csv')
-      .then(response => response.text())
-      .then(data => {
-        const lineas = data.split('\n');
-        const select = document.getElementById('socio');
-        lineas.forEach(linea => {
-          const [nombre, ci] = linea.split(';');
-          if(nombre && ci){
-            const option = document.createElement('option');
-            option.value = ci.trim();
-            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
-            select.appendChild(option);
-          }
-        });
-      })
-      .catch(error => console.error('Error al cargar lista de socios:', error));
-  </script>
-
-  <!-- Script para enviar datos a Sheet.best -->
+<!-- Script para enviar datos a Sheet.best -->
 <script>
   document.getElementById("formDenuncia").addEventListener("submit", function(e){
     e.preventDefault();
     const formData = new FormData(this);
+    formData.set("FECHA", new Date().toLocaleString()); // agrega fecha automática
 
     fetch(this.action, {
       method: "POST",
@@ -187,6 +109,3 @@
     .catch(err => alert("❌ Error al enviar: " + err));
   });
 </script>
-
-</body>
-</html>
