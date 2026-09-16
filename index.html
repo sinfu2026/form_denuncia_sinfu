@@ -144,6 +144,10 @@
 
         <label>Descripción de los hechos:</label>
         <textarea name="DESCRIPCION"></textarea>
+
+        <label>Código de denuncia:</label>
+        <input type="text" name="CODIGO" id="codigoDenuncia" readonly style="background-color:#f0f4f8; font-weight:bold;">
+
       </fieldset>
 
       <p style="font-style: italic; color: #555;text-align: center; margin-top: 10px;">
@@ -156,36 +160,58 @@
   </div>
 
   <script>
-    fetch('lista_socios.csv')
-      .then(response => response.text())
-      .then(data => {
-        const lineas = data.split('\n');
-        const select = document.getElementById('socio');
-        lineas.forEach(linea => {
-          const [nombre, ci] = linea.split(';');
-          if(nombre && ci){
-            const option = document.createElement('option');
-            option.value = `${nombre.trim()} — ${ci.trim()}`;
-            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
-            select.appendChild(option);
-          }
-        });
-      })
-      .catch(error => console.error('Error al cargar lista de socios:', error));
+  // Cargar lista de socios desde CSV
+  fetch('lista_socios.csv')
+    .then(response => response.text())
+    .then(data => {
+      const lineas = data.split('\n');
+      const select = document.getElementById('socio');
+      lineas.forEach(linea => {
+        const [nombre, ci] = linea.split(';');
+        if(nombre && ci){
+          const option = document.createElement('option');
+          option.value = `${nombre.trim()} — ${ci.trim()}`;
+          option.textContent = `${nombre.trim()} — ${ci.trim()}`;
+          select.appendChild(option);
+        }
+      });
+    })
+    .catch(error => console.error('Error al cargar lista de socios:', error));
 
-    document.getElementById("formDenuncia").addEventListener("submit", function(e){
-      e.preventDefault();
-      const formData = new FormData(this);
-      formData.set("FECHA", new Date().toLocaleString());
+  // Función para generar código alfanumérico
+  function generarCodigoLocal() {
+    const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numeros = "0123456789";
+    let codigo = "";
+    for (let i = 0; i < 3; i++) {
+      codigo += letras.charAt(Math.floor(Math.random() * letras.length));
+    }
+    for (let j = 0; j < 4; j++) {
+      codigo += numeros.charAt(Math.floor(Math.random() * numeros.length));
+    }
+    return codigo;
+  }
 
-      fetch(this.action, {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.text())
-      .then(msg => alert("✅ Denuncia enviada correctamente"))
-      .catch(err => alert("❌ Error al enviar: " + err));
-    });
-  </script>
+  // Manejo del envío del formulario
+  document.getElementById("formDenuncia").addEventListener("submit", function(e){
+    e.preventDefault();
+    const formData = new FormData(this);
+    formData.set("FECHA", new Date().toLocaleString());
+
+    // Generar código y mostrarlo en el campo de solo lectura
+    const codigoGenerado = generarCodigoLocal();
+    document.getElementById("codigoDenuncia").value = codigoGenerado;
+    formData.set("CODIGO", codigoGenerado);
+
+    fetch(this.action, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.text())
+    .then(msg => alert("✅ Denuncia enviada correctamente\nTu código es: " + codigoGenerado))
+    .catch(err => alert("❌ Error al enviar: " + err));
+  });
+</script>
+
 </body>
 </html>
