@@ -2,42 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario de Denuncias</title>
+  <title>Gestión de Denuncias - Comisión</title>
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background-color: #e8f0fa; /* azul claro */
+      background-color: #e8f0fa;
       margin: 0;
       padding: 40px 0;
       display: flex;
       justify-content: center;
       color: #1a252f;
     }
-
     .container {
-      width: 50%; /* ocupa la mitad de la pantalla */
+      width: 70%;
       background-color: #ffffff;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       padding: 30px 40px;
     }
-
-    h1 {
+    h1, h3 {
       text-align: center;
       color: #0b3d91;
-      margin-bottom: 5px;
-      font-size: 26px;
     }
-
-    h3 {
-      text-align: center;
-      color: #0b3d91;
-      font-weight: bold;
-      margin-top: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
       margin-bottom: 25px;
-      font-size: 16px;
     }
-
+    th, td {
+      border: 1px solid #cfd8e3;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #0b3d91;
+      color: white;
+    }
     fieldset {
       border: 1px solid #cfd8e3;
       border-radius: 8px;
@@ -45,20 +45,16 @@
       margin-bottom: 25px;
       background-color: #f9fbfd;
     }
-
     legend {
       font-weight: bold;
       color: #0b3d91;
-      font-size: 15px;
     }
-
     label {
       display: block;
       margin-top: 10px;
       font-weight: 500;
       color: #2c3e50;
     }
-
     input, select, textarea {
       width: 100%;
       padding: 8px;
@@ -67,17 +63,11 @@
       font-size: 14px;
       margin-top: 5px;
     }
-
-    textarea[name="DESCRIPCION"],
     textarea[name="OBS_SEGUIMIENTO"] {
       min-height: 140px;
       resize: vertical;
-    }
-
-    textarea[name="OBS_SEGUIMIENTO"] {
       background-color: #f0f4f8;
     }
-
     button {
       background-color: #0b3d91;
       color: white;
@@ -88,9 +78,7 @@
       font-size: 16px;
       display: block;
       margin: 0 auto;
-      transition: background-color 0.3s ease;
     }
-
     button:hover {
       background-color: #082e6b;
     }
@@ -98,62 +86,35 @@
 </head>
 <body>
   <div class="container">
-    <h1>Formulario de Denuncias</h1>
+    <h1>Gestión de Denuncias</h1>
     <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
 
-    <form id="formDenuncia" method="POST" action="https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0">
+    <!-- Tabla dinámica de denuncias -->
+    <table id="tablaDenuncias">
+      <thead>
+        <tr>
+          <th>Socio</th>
+          <th>Tipo de denuncia</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Formulario exclusivo Comisión -->
+    <form id="formComision" method="POST" action="https://api.sheetbest.com/sheets/TU-ENDPOINT-COMISION">
       <input type="hidden" name="FECHA">
 
-      <!-- DATOS DEL DENUNCIANTE -->
       <fieldset>
-        <legend>Datos del denunciante</legend>
-        <label>Socio (Nombre - Cédula):</label>
-        <select id="socio" name="SOCIO" required>
-          <option value="">Seleccione su nombre</option>
-        </select>
+        <legend>Gestión Comisión</legend>
+        <label>Socio (referencia):</label>
+        <input type="text" name="SOCIO" required>
 
-        <label>Dependencia / institución:</label>
-        <input type="text" name="DEPENDENCIA">
-
-        <label>Teléfono:</label>
-        <input type="text" name="TELEFONO">
-
-        <label>Correo electrónico:</label>
-        <input type="email" name="CORREO">
-      </fieldset>
-
-      <!-- DATOS DE LA DENUNCIA -->
-      <fieldset>
-        <legend>Datos de la denuncia</legend>
-        <label>Tipo de denuncia:</label>
-        <select name="TIPO_DENUNCIA">
-          <option>Derechos laborales</option>
-          <option>Salarios y beneficios</option>
-          <option>Horarios / jornada laboral</option>
-          <option>Vacaciones / permisos</option>
-          <option>Acoso laboral</option>
-          <option>Violencia o maltrato</option>
-          <option>Discriminación</option>
-          <option>Represalia sindical</option>
-          <option>Seguridad y condiciones de trabajo</option>
-          <option>Abuso de autoridad</option>
-          <option>Irregularidad administrativa</option>
-          <option>Conflicto sindical</option>
-          <option>Otros</option>
-        </select>
-
-        <label>Descripción de los hechos:</label>
-        <textarea name="DESCRIPCION"></textarea>
-      </fieldset>
-
-      <!-- EXCLUSIVO COMISION -->
-      <fieldset>
-        <legend>Exclusivo Comisión</legend>
         <label>Prioridad:</label>
-        <input type="text" name="PRIORIDAD" value="(Asignado por Comisión)" readonly>
+        <input type="text" name="PRIORIDAD">
 
         <label>Derivado a:</label>
-        <select name="RESPONSABLE" disabled>
+        <select name="RESPONSABLE">
           <option value="Elegir" selected>Elegir</option>
           <option>Víctor Manuel García Amarilla — Secretario General</option>
           <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
@@ -169,35 +130,31 @@
         </select>
 
         <label>Obs. / Seguimiento:</label>
-        <textarea name="OBS_SEGUIMIENTO" readonly></textarea>
+        <textarea name="OBS_SEGUIMIENTO"></textarea>
 
-        <label>Estado inicial:</label>
-        <input type="text" name="ESTADO" value="Recibida" readonly>
+        <label>Estado:</label>
+        <input type="text" name="ESTADO" value="En gestión">
       </fieldset>
 
-      <button type="submit">Enviar denuncia</button>
+      <button type="submit">Guardar gestión</button>
     </form>
   </div>
 
   <script>
-    fetch('lista_socios.csv')
-      .then(response => response.text())
+    // Cargar denuncias en tabla desde denuncias_sinfu
+    fetch("https://api.sheetbest.com/sheets/TU-ENDPOINT-SINFU")
+      .then(res => res.json())
       .then(data => {
-        const lineas = data.split('\n');
-        const select = document.getElementById('socio');
-        lineas.forEach(linea => {
-          const [nombre, ci] = linea.split(';');
-          if(nombre && ci){
-            const option = document.createElement('option');
-            option.value = `${nombre.trim()} — ${ci.trim()}`;
-            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
-            select.appendChild(option);
-          }
+        const tbody = document.querySelector("#tablaDenuncias tbody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${row.SOCIO}</td><td>${row.TIPO_DENUNCIA}</td><td>${row.DESCRIPCION}</td>`;
+          tbody.appendChild(tr);
         });
-      })
-      .catch(error => console.error('Error al cargar lista de socios:', error));
+      });
 
-    document.getElementById("formDenuncia").addEventListener("submit", function(e){
+    // Enviar gestión a denuncias_comision
+    document.getElementById("formComision").addEventListener("submit", function(e){
       e.preventDefault();
       const formData = new FormData(this);
       formData.set("FECHA", new Date().toLocaleString());
@@ -207,8 +164,8 @@
         body: formData
       })
       .then(res => res.text())
-      .then(msg => alert("✅ Denuncia enviada correctamente"))
-      .catch(err => alert("❌ Error al enviar: " + err));
+      .then(msg => alert("✅ Gestión guardada correctamente"))
+      .catch(err => alert("❌ Error al guardar: " + err));
     });
   </script>
 </body>
