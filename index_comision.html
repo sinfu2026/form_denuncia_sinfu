@@ -94,6 +94,7 @@
       <thead>
         <tr>
           <th>Socio</th>
+          <th>Teléfono</th>
           <th>Tipo de denuncia</th>
           <th>Descripción</th>
         </tr>
@@ -108,7 +109,9 @@
       <fieldset>
         <legend>Gestión Comisión</legend>
         <label>Socio (referencia):</label>
-        <input type="text" name="SOCIO" required>
+        <select id="socioRef" name="SOCIO" required>
+          <option value="">Seleccione el socio</option>
+        </select>
 
         <label>Prioridad:</label>
         <input type="text" name="PRIORIDAD">
@@ -148,10 +151,28 @@
         const tbody = document.querySelector("#tablaDenuncias tbody");
         data.forEach(row => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${row.SOCIO}</td><td>${row.TIPO_DENUNCIA}</td><td>${row.DESCRIPCION}</td>`;
+          tr.innerHTML = `<td>${row.SOCIO}</td><td>${row.TELEFONO}</td><td>${row.TIPO_DENUNCIA}</td><td>${row.DESCRIPCION}</td>`;
           tbody.appendChild(tr);
         });
       });
+
+    // Cargar lista de socios en desplegable de referencia
+    fetch('lista_socios.csv')
+      .then(response => response.text())
+      .then(data => {
+        const lineas = data.split('\n');
+        const select = document.getElementById('socioRef');
+        lineas.forEach(linea => {
+          const [nombre, ci] = linea.split(';');
+          if(nombre && ci){
+            const option = document.createElement('option');
+            option.value = `${nombre.trim()} — ${ci.trim()}`;
+            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
+            select.appendChild(option);
+          }
+        });
+      })
+      .catch(error => console.error('Error al cargar lista de socios:', error));
 
     // Enviar gestión a denuncias_comision
     document.getElementById("formComision").addEventListener("submit", function(e){
