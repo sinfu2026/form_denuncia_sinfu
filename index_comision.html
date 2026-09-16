@@ -141,7 +141,13 @@
         <textarea name="OBS_SEGUIMIENTO"></textarea>
 
         <label>Estado:</label>
-        <input type="text" name="ESTADO" value="En gestión">
+        <select name="ESTADO" valued= "Generado" required>
+          <option value="Recibido">Recibido</option>
+          <option value="Asignado">Asignado</option>
+          <option value="Tramite">En Tramite</option>
+          <option value="Finalizado">Finalizado</option>
+        </select>
+        
       </fieldset>
 
       <button type="submit">Guardar gestión</button>
