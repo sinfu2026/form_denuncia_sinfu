@@ -73,6 +73,7 @@
           <th>Descripción</th>
           <th>Estado</th>
           <th>Obs./Seguimiento</th>
+          <th>Responsable</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -126,6 +127,7 @@
             <td>${row.DESCRIPCION || ""}</td>
             <td>${row.ESTADO || ""}</td>
             <td>${row.OBS_SEGUIMIENTO || ""}</td>
+            <td>${row.RESPONSABLE || ""}</td>
           `;
           tbody.appendChild(tr);
         }
