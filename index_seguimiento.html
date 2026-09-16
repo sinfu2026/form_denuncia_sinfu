@@ -42,7 +42,7 @@
       font-weight: 500;
       color: #2c3e50;
     }
-    select {
+    input {
       width: 100%;
       padding: 8px;
       border: 1px solid #b0c4de;
@@ -57,20 +57,16 @@
     <h1>Seguimiento de Denuncias</h1>
     <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
 
-    <!-- Filtro por socio -->
-    <label for="socioFiltro">Seleccione su nombre:</label>
-    <select id="socioFiltro">
-      <option value="">-- Seleccione --</option>
-    </select>
+    <!-- Filtro por código -->
+    <label for="codigoFiltro">Ingrese su código de denuncia:</label>
+    <input type="text" id="codigoFiltro" placeholder="Ej: ABC1234">
 
     <!-- Tabla dinámica de denuncias -->
     <table id="tablaDenuncias">
       <thead>
         <tr>
-          <th>Socio</th>
-          <th>Teléfono</th>
+          <th>Código</th>
           <th>Tipo de denuncia</th>
-          <th>Descripción</th>
           <th>Estado</th>
           <th>Obs./Seguimiento</th>
           <th>Responsable</th>
@@ -88,43 +84,22 @@
       .then(res => res.json())
       .then(data => {
         denunciasData = data;
-        cargarTabla(); // inicial vacío
       });
 
-    // Cargar lista de socios en desplegable
-    fetch('lista_socios.csv')
-      .then(response => response.text())
-      .then(data => {
-        const lineas = data.split('\n');
-        const select = document.getElementById('socioFiltro');
-        lineas.forEach(linea => {
-          const [nombre, ci] = linea.split(';');
-          if(nombre && ci){
-            const option = document.createElement('option');
-            option.value = `${nombre.trim()} — ${ci.trim()}`;
-            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
-            select.appendChild(option);
-          }
-        });
-      })
-      .catch(error => console.error('Error al cargar lista de socios:', error));
-
-    // Filtrar tabla al seleccionar socio
-    document.getElementById('socioFiltro').addEventListener('change', function(){
-      cargarTabla(this.value);
+    // Filtrar tabla al ingresar código
+    document.getElementById('codigoFiltro').addEventListener('input', function(){
+      cargarTabla(this.value.trim());
     });
 
-    function cargarTabla(socioSeleccionado = ""){
+    function cargarTabla(codigoSeleccionado = ""){
       const tbody = document.querySelector("#tablaDenuncias tbody");
       tbody.innerHTML = "";
       denunciasData.forEach(row => {
-        if(!socioSeleccionado || row.SOCIO === socioSeleccionado){
+        if(!codigoSeleccionado || row.CODIGO === codigoSeleccionado){
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td>${row.SOCIO}</td>
-            <td>${row.TELEFONO || ""}</td>
+            <td>${row.CODIGO || ""}</td>
             <td>${row.TIPO_DENUNCIA || ""}</td>
-            <td>${row.DESCRIPCION || ""}</td>
             <td>${row.ESTADO || ""}</td>
             <td>${row.OBS_SEGUIMIENTO || ""}</td>
             <td>${row.RESPONSABLE || ""}</td>
