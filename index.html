@@ -6,75 +6,80 @@
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background-color: #eef2f5;
-      margin: 40px;
-      color: #2c3e50;
+      background-color: #e8f0fa; /* azul claro */
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+      color: #1a252f;
+    }
+
+    .container {
+      width: 50%; /* ocupa la mitad de la pantalla */
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px 40px;
     }
 
     h1 {
       text-align: center;
-      color: #1a252f;
+      color: #0b3d91;
       margin-bottom: 5px;
-      font-size: 28px;
+      font-size: 26px;
     }
 
     h3 {
       text-align: center;
-      color: #34495e;
+      color: #0b3d91;
+      font-weight: bold;
       margin-top: 0;
       margin-bottom: 25px;
-      font-weight: normal;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     fieldset {
-      border: 1px solid #ccc;
+      border: 1px solid #cfd8e3;
       border-radius: 8px;
       padding: 20px;
       margin-bottom: 25px;
-      background-color: #fff;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      background-color: #f9fbfd;
     }
 
     legend {
       font-weight: bold;
-      color: #1a252f;
-      font-size: 16px;
+      color: #0b3d91;
+      font-size: 15px;
     }
 
     label {
-      display: inline-block;
-      width: 200px;
-      margin-bottom: 10px;
+      display: block;
+      margin-top: 10px;
       font-weight: 500;
       color: #2c3e50;
     }
 
     input, select, textarea {
-      width: calc(100% - 220px);
+      width: 100%;
       padding: 8px;
-      border: 1px solid #bbb;
+      border: 1px solid #b0c4de;
       border-radius: 4px;
       font-size: 14px;
+      margin-top: 5px;
     }
 
-    textarea {
+    textarea[name="DESCRIPCION"],
+    textarea[name="OBS_SEGUIMIENTO"] {
+      min-height: 140px;
       resize: vertical;
     }
 
-    textarea[name="DESCRIPCION"] {
-      width: 100%;
-      min-height: 180px; /* más grande */
-    }
-
     textarea[name="OBS_SEGUIMIENTO"] {
-      width: 100%;
-      min-height: 180px;
-      background-color: #f9f9f9;
+      background-color: #f0f4f8;
     }
 
     button {
-      background-color: #1a252f;
+      background-color: #0b3d91;
       color: white;
       border: none;
       padding: 12px 25px;
@@ -87,93 +92,93 @@
     }
 
     button:hover {
-      background-color: #34495e;
+      background-color: #082e6b;
     }
   </style>
 </head>
 <body>
-  <h1>Formulario de Denuncias</h1>
-  <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
+  <div class="container">
+    <h1>Formulario de Denuncias</h1>
+    <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
 
-  <form id="formDenuncia" method="POST" action="https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0">
-    <!-- Campo oculto para fecha -->
-    <input type="hidden" name="FECHA">
+    <form id="formDenuncia" method="POST" action="https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0">
+      <input type="hidden" name="FECHA">
 
-    <!-- DATOS DEL DENUNCIANTE -->
-    <fieldset>
-      <legend>Datos del denunciante</legend>
-      <label>Socio (Nombre - Cédula):</label>
-      <select id="socio" name="SOCIO" required>
-        <option value="">Seleccione su nombre</option>
-      </select>
+      <!-- DATOS DEL DENUNCIANTE -->
+      <fieldset>
+        <legend>Datos del denunciante</legend>
+        <label>Socio (Nombre - Cédula):</label>
+        <select id="socio" name="SOCIO" required>
+          <option value="">Seleccione su nombre</option>
+        </select>
 
-      <label>Dependencia / institución:</label>
-      <input type="text" name="DEPENDENCIA">
+        <label>Dependencia / institución:</label>
+        <input type="text" name="DEPENDENCIA">
 
-      <label>Teléfono:</label>
-      <input type="text" name="TELEFONO">
+        <label>Teléfono:</label>
+        <input type="text" name="TELEFONO">
 
-      <label>Correo electrónico:</label>
-      <input type="email" name="CORREO">
-    </fieldset>
+        <label>Correo electrónico:</label>
+        <input type="email" name="CORREO">
+      </fieldset>
 
-    <!-- DATOS DE LA DENUNCIA -->
-    <fieldset>
-      <legend>Datos de la denuncia</legend>
-      <label>Tipo de denuncia:</label>
-      <select name="TIPO_DENUNCIA">
-        <option>Derechos laborales</option>
-        <option>Salarios y beneficios</option>
-        <option>Horarios / jornada laboral</option>
-        <option>Vacaciones / permisos</option>
-        <option>Acoso laboral</option>
-        <option>Violencia o maltrato</option>
-        <option>Discriminación</option>
-        <option>Represalia sindical</option>
-        <option>Seguridad y condiciones de trabajo</option>
-        <option>Abuso de autoridad</option>
-        <option>Irregularidad administrativa</option>
-        <option>Conflicto sindical</option>
-        <option>Otros</option>
-      </select>
+      <!-- DATOS DE LA DENUNCIA -->
+      <fieldset>
+        <legend>Datos de la denuncia</legend>
+        <label>Tipo de denuncia:</label>
+        <select name="TIPO_DENUNCIA">
+          <option>Derechos laborales</option>
+          <option>Salarios y beneficios</option>
+          <option>Horarios / jornada laboral</option>
+          <option>Vacaciones / permisos</option>
+          <option>Acoso laboral</option>
+          <option>Violencia o maltrato</option>
+          <option>Discriminación</option>
+          <option>Represalia sindical</option>
+          <option>Seguridad y condiciones de trabajo</option>
+          <option>Abuso de autoridad</option>
+          <option>Irregularidad administrativa</option>
+          <option>Conflicto sindical</option>
+          <option>Otros</option>
+        </select>
 
-      <label>Descripción de los hechos:</label>
-      <textarea name="DESCRIPCION"></textarea>
-    </fieldset>
+        <label>Descripción de los hechos:</label>
+        <textarea name="DESCRIPCION"></textarea>
+      </fieldset>
 
-    <!-- EXCLUSIVO COMISION -->
-    <fieldset>
-      <legend>Exclusivo Comisión</legend>
-      <label>Prioridad:</label>
-      <input type="text" name="PRIORIDAD" value="(Asignado por Comisión)" readonly>
+      <!-- EXCLUSIVO COMISION -->
+      <fieldset>
+        <legend>Exclusivo Comisión</legend>
+        <label>Prioridad:</label>
+        <input type="text" name="PRIORIDAD" value="(Asignado por Comisión)" readonly>
 
-      <label>Derivado a:</label>
-      <select name="RESPONSABLE" disabled>
-        <option value="Elegir" selected>Elegir</option>
-        <option>Víctor Manuel García Amarilla — Secretario General</option>
-        <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
-        <option>Jessica Carolina Ortiz Sánchez — Secretaria de Notas</option>
-        <option>Raúl Zarza — Secretario de Finanzas</option>
-        <option>Roger Adrián Eracles Lezcano Vera — Secretario de Juventud</option>
-        <option>Gustavo David Aguilera Mendoza — Secretario de Educación</option>
-        <option>Melissa Beatriz Sánchez García — Secretaria de Organización</option>
-        <option>Fernando Daniel Morales Zarza — Secretario de Comunicación</option>
-        <option>Cesar Villarreo Legal — Secretario de Conflictos</option>
-        <option>Alfredo Abdón Coronel — Secretario Intergremial</option>
-        <option>Miguel María Rolón Mendoza — Secretario Interinstitucional</option>
-      </select>
+        <label>Derivado a:</label>
+        <select name="RESPONSABLE" disabled>
+          <option value="Elegir" selected>Elegir</option>
+          <option>Víctor Manuel García Amarilla — Secretario General</option>
+          <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
+          <option>Jessica Carolina Ortiz Sánchez — Secretaria de Notas</option>
+          <option>Raúl Zarza — Secretario de Finanzas</option>
+          <option>Roger Adrián Eracles Lezcano Vera — Secretario de Juventud</option>
+          <option>Gustavo David Aguilera Mendoza — Secretario de Educación</option>
+          <option>Melissa Beatriz Sánchez García — Secretaria de Organización</option>
+          <option>Fernando Daniel Morales Zarza — Secretario de Comunicación</option>
+          <option>Cesar Villarreo Legal — Secretario de Conflictos</option>
+          <option>Alfredo Abdón Coronel — Secretario Intergremial</option>
+          <option>Miguel María Rolón Mendoza — Secretario Interinstitucional</option>
+        </select>
 
-      <label>Obs. / Seguimiento:</label>
-      <textarea name="OBS_SEGUIMIENTO" readonly></textarea>
+        <label>Obs. / Seguimiento:</label>
+        <textarea name="OBS_SEGUIMIENTO" readonly></textarea>
 
-      <label>Estado inicial:</label>
-      <input type="text" name="ESTADO" value="Recibida" readonly>
-    </fieldset>
+        <label>Estado inicial:</label>
+        <input type="text" name="ESTADO" value="Recibida" readonly>
+      </fieldset>
 
-    <button type="submit">Enviar denuncia</button>
-  </form>
+      <button type="submit">Enviar denuncia</button>
+    </form>
+  </div>
 
-  <!-- Script para cargar socios desde CSV -->
   <script>
     fetch('lista_socios.csv')
       .then(response => response.text())
@@ -191,14 +196,11 @@
         });
       })
       .catch(error => console.error('Error al cargar lista de socios:', error));
-  </script>
 
-  <!-- Script para enviar datos a Sheet.best -->
-  <script>
     document.getElementById("formDenuncia").addEventListener("submit", function(e){
       e.preventDefault();
       const formData = new FormData(this);
-      formData.set("FECHA", new Date().toLocaleString()); // agrega fecha automática
+      formData.set("FECHA", new Date().toLocaleString());
 
       fetch(this.action, {
         method: "POST",
