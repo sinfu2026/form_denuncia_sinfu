@@ -102,7 +102,7 @@
     </table>
 
     <!-- Formulario exclusivo Comisión -->
-    <form id="formComision" method="POST" action="https://api.sheetbest.com/sheets/TU-ENDPOINT-COMISION">
+    <form id="formComision" method="POST" action="https://api.sheetbest.com/sheets/0368d6e2-5633-4b0b-af5b-4747f66a3d4d">
       <input type="hidden" name="FECHA">
 
       <fieldset>
@@ -142,7 +142,7 @@
 
   <script>
     // Cargar denuncias en tabla desde denuncias_sinfu
-    fetch("https://api.sheetbest.com/sheets/TU-ENDPOINT-SINFU")
+    fetch("https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0")
       .then(res => res.json())
       .then(data => {
         const tbody = document.querySelector("#tablaDenuncias tbody");
