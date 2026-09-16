@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Denuncias - Comisión</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #e8f0fa;
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+      color: #1a252f;
+    }
+    .container {
+      width: 70%;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+    }
+    h1, h3 {
+      text-align: center;
+      color: #0b3d91;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+    }
+    th, td {
+      border: 1px solid #cfd8e3;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #0b3d91;
+      color: white;
+    }
+    fieldset {
+      border: 1px solid #cfd8e3;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 25px;
+      background-color: #f9fbfd;
+    }
+    legend {
+      font-weight: bold;
+      color: #0b3d91;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 500;
+      color: #2c3e50;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #b0c4de;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    textarea[name="OBS_SEGUIMIENTO"] {
+      min-height: 140px;
+      resize: vertical;
+      background-color: #f0f4f8;
+    }
+    button {
+      background-color: #0b3d91;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      margin: 0 auto;
+    }
+    button:hover {
+      background-color: #082e6b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Denuncias</h1>
+    <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
+
+    <!-- Tabla dinámica de denuncias -->
+    <table id="tablaDenuncias">
+      <thead>
+        <tr>
+          <th>Socio</th>
+          <th>Teléfono</th>
+          <th>Tipo de denuncia</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Formulario exclusivo Comisión -->
+    <form id="formComision" method="POST" action="https://api.sheetbest.com/sheets/0368d6e2-5633-4b0b-af5b-4747f66a3d4d">
+      <input type="hidden" name="FECHA">
+
+      <fieldset>
+        <legend>Gestión Comisión</legend>
+        <label>Socio (referencia):</label>
+        <select id="socioRef" name="SOCIO" required>
+          <option value="">Seleccione el socio</option>
+        </select>
+
+        <label>Prioridad:</label>
+        <select name="PRIORIDAD" required>
+          <option value="Normal">🟢 - Normal</option>
+          <option value="Medio">🟡 - Medio</option>
+          <option value="Alta">🔴 - Alta</option>
+        </select>
+
+
+        <label>Derivado a:</label>
+        <select name="RESPONSABLE">
+          <option value="Elegir" selected>Elegir</option>
+          <option>Víctor Manuel García Amarilla — Secretario General</option>
+          <option>Félix Rubén Giménez Duarte — Secretario Adjunto</option>
+          <option>Jessica Carolina Ortiz Sánchez — Secretaria de Notas</option>
+          <option>Raúl Zarza — Secretario de Finanzas</option>
+          <option>Roger Adrián Eracles Lezcano Vera — Secretario de Juventud</option>
+          <option>Gustavo David Aguilera Mendoza — Secretario de Educación</option>
+          <option>Melissa Beatriz Sánchez García — Secretaria de Organización</option>
+          <option>Fernando Daniel Morales Zarza — Secretario de Comunicación</option>
+          <option>Cesar Villarreo Legal — Secretario de Conflictos</option>
+          <option>Alfredo Abdón Coronel — Secretario Intergremial</option>
+          <option>Miguel María Rolón Mendoza — Secretario Interinstitucional</option>
+        </select>
+
+        <label>Obs. / Seguimiento:</label>
+        <textarea name="OBS_SEGUIMIENTO"></textarea>
+
+        <label>Estado:</label>
+        <select name="ESTADO" valued= "Generado" required>
+          <option value="Recibido">Recibido</option>
+          <option value="Asignado">Asignado</option>
+          <option value="Tramite">En Tramite</option>
+          <option value="Finalizado">Finalizado</option>
+        </select>
+        
+      </fieldset>
+
+      <button type="submit">Guardar gestión</button>
+    </form>
+  </div>
+
+  <script>
+    // Cargar denuncias en tabla desde denuncias_sinfu
+    fetch("https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#tablaDenuncias tbody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${row.SOCIO}</td><td>${row.TELEFONO}</td><td>${row.TIPO_DENUNCIA}</td><td>${row.DESCRIPCION}</td>`;
+          tbody.appendChild(tr);
+        });
+      });
+
+    // Cargar lista de socios en desplegable de referencia
+    fetch('lista_socios.csv')
+      .then(response => response.text())
+      .then(data => {
+        const lineas = data.split('\n');
+        const select = document.getElementById('socioRef');
+        lineas.forEach(linea => {
+          const [nombre, ci] = linea.split(';');
+          if(nombre && ci){
+            const option = document.createElement('option');
+            option.value = `${nombre.trim()} — ${ci.trim()}`;
+            option.textContent = `${nombre.trim()} — ${ci.trim()}`;
+            select.appendChild(option);
+          }
+        });
+      })
+      .catch(error => console.error('Error al cargar lista de socios:', error));
+
+    // Enviar gestión a denuncias_comision
+    document.getElementById("formComision").addEventListener("submit", function(e){
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.set("FECHA", new Date().toLocaleString());
+
+      fetch(this.action, {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(msg => alert("✅ Gestión guardada correctamente"))
+      .catch(err => alert("❌ Error al guardar: " + err));
+    });
+  </script>
+</body>
+</html>
