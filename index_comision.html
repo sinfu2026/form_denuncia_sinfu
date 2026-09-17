@@ -27,7 +27,6 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 25px;
     }
     th, td {
       border: 1px solid #cfd8e3;
@@ -37,6 +36,14 @@
     th {
       background-color: #0b3d91;
       color: white;
+    }
+    /* Contenedor con scroll para la tabla */
+    .tabla-scroll {
+      max-height: 280px; /* altura aprox. para 7 filas */
+      overflow-y: auto;
+      margin-bottom: 25px;
+      border: 1px solid #cfd8e3;
+      border-radius: 6px;
     }
     fieldset {
       border: 1px solid #cfd8e3;
@@ -89,18 +96,20 @@
     <h1>Gestión de Denuncias</h1>
     <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
 
-    <!-- Tabla dinámica de denuncias -->
-    <table id="tablaDenuncias">
-      <thead>
-        <tr>
-          <th>Socio</th>
-          <th>Teléfono</th>
-          <th>Tipo de denuncia</th>
-          <th>Descripción</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <!-- Tabla dinámica de denuncias con scroll -->
+    <div class="tabla-scroll">
+      <table id="tablaDenuncias">
+        <thead>
+          <tr>
+            <th>Socio</th>
+            <th>Teléfono</th>
+            <th>Tipo de denuncia</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
     <!-- Formulario exclusivo Comisión -->
     <form id="formComision" method="POST" action="https://api.sheetbest.com/sheets/0368d6e2-5633-4b0b-af5b-4747f66a3d4d">
@@ -119,7 +128,6 @@
           <option value="Medio">🟡 - Medio</option>
           <option value="Alta">🔴 - Alta</option>
         </select>
-
 
         <label>Derivado a:</label>
         <select name="RESPONSABLE">
@@ -141,13 +149,12 @@
         <textarea name="OBS_SEGUIMIENTO"></textarea>
 
         <label>Estado:</label>
-        <select name="ESTADO" valued= "Generado" required>
+        <select name="ESTADO" required>
           <option value="Recibido">Recibido</option>
           <option value="Asignado">Asignado</option>
           <option value="Tramite">En Tramite</option>
           <option value="Finalizado">Finalizado</option>
         </select>
-        
       </fieldset>
 
       <button type="submit">Guardar gestión</button>
