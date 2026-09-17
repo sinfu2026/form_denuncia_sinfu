@@ -50,6 +50,12 @@
       font-size: 14px;
       margin-top: 5px;
     }
+    .mensaje-ayuda {
+      text-align: center;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -57,8 +63,11 @@
     <h1>Seguimiento de Denuncias</h1>
     <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
 
+    <!-- Mensaje de ayuda -->
+    <p class="mensaje-ayuda">Ingrese el código que recibió al enviar su denuncia para ver el estado.</p>
+
     <!-- Filtro por código -->
-    <label for="codigoFiltro">Ingrese su código de denuncia:</label>
+    <label for="codigoFiltro">Código de denuncia:</label>
     <input type="text" id="codigoFiltro" placeholder="Ej: ABC1234">
 
     <!-- Tabla dinámica de denuncias -->
@@ -97,16 +106,31 @@
       denunciasData.forEach(row => {
         if(!codigoSeleccionado || row.CODIGO === codigoSeleccionado){
           const tr = document.createElement("tr");
+
+          // Definir color según estado
+          let estadoColor = "";
+          if(row.ESTADO === "Recibido") estadoColor = "background-color:#d4edda; color:#155724; font-weight:bold;"; // verde claro
+          else if(row.ESTADO === "Asignado") estadoColor = "background-color:#cce5ff; color:#004085; font-weight:bold;"; // azul claro
+          else if(row.ESTADO === "Tramite" || row.ESTADO === "En Tramite") estadoColor = "background-color:#fff3cd; color:#856404; font-weight:bold;"; // amarillo
+          else if(row.ESTADO === "Finalizado") estadoColor = "background-color:#f8d7da; color:#721c24; font-weight:bold;"; // rojo claro
+
           tr.innerHTML = `
             <td>${row.CODIGO || ""}</td>
             <td>${row.TIPO_DENUNCIA || ""}</td>
-            <td>${row.ESTADO || ""}</td>
+            <td style="${estadoColor}">${row.ESTADO || ""}</td>
             <td>${row.OBS_SEGUIMIENTO || ""}</td>
             <td>${row.RESPONSABLE || ""}</td>
           `;
           tbody.appendChild(tr);
         }
       });
+
+      // Mensaje si no se encuentra denuncia
+      if(tbody.innerHTML === ""){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="5" style="text-align:center; color:#888;">❌ No existe denuncia con ese código</td>`;
+        tbody.appendChild(tr);
+      }
     }
   </script>
 </body>
