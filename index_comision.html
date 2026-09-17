@@ -101,6 +101,7 @@
       <table id="tablaDenuncias">
         <thead>
           <tr>
+            <th>Fecha</th>
             <th>Socio</th>
             <th>Teléfono</th>
             <th>Tipo de denuncia</th>
@@ -166,10 +167,19 @@
     fetch("https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0")
       .then(res => res.json())
       .then(data => {
+        // Ordenar por fecha ascendente (columna FECHA)
+        data.sort((a, b) => new Date(a.FECHA) - new Date(b.FECHA));
+
         const tbody = document.querySelector("#tablaDenuncias tbody");
         data.forEach(row => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${row.SOCIO}</td><td>${row.TELEFONO}</td><td>${row.TIPO_DENUNCIA}</td><td>${row.DESCRIPCION}</td>`;
+          tr.innerHTML = `
+            <td>${row.FECHA || ""}</td>
+            <td>${row.SOCIO || ""}</td>
+            <td>${row.TELEFONO || ""}</td>
+            <td>${row.TIPO_DENUNCIA || ""}</td>
+            <td>${row.DESCRIPCION || ""}</td>
+          `;
           tbody.appendChild(tr);
         });
       });
