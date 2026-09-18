@@ -37,9 +37,8 @@
       background-color: #0b3d91;
       color: white;
     }
-    /* Contenedor con scroll para la tabla */
     .tabla-scroll {
-      max-height: 280px; /* altura aprox. para 7 filas */
+      max-height: 280px;
       overflow-y: auto;
       margin-bottom: 25px;
       border: 1px solid #cfd8e3;
@@ -96,7 +95,6 @@
     <h1>Gestión de Denuncias</h1>
     <h3>Sindicato de Funcionarios del MDS - SINFUSAS</h3>
 
-    <!-- Tabla dinámica de denuncias con scroll -->
     <div class="tabla-scroll">
       <table id="tablaDenuncias">
         <thead>
@@ -113,9 +111,9 @@
       </table>
     </div>
 
-    <!-- Formulario exclusivo Comisión -->
     <form id="formComision" method="POST" action="https://api.sheetbest.com/sheets/0368d6e2-5633-4b0b-af5b-4747f66a3d4d">
       <input type="hidden" name="FECHA">
+      <input type="hidden" name="SOCIO">
 
       <fieldset>
         <legend>Gestión Comisión</legend>
@@ -164,18 +162,16 @@
   </div>
 
   <script>
-    // Cargar denuncias en tabla desde denuncias_sinfu
+    // Cargar denuncias en tabla y desplegable desde denuncias_sinfu
     fetch("https://api.sheetbest.com/sheets/a81ec7fd-7bd5-4d63-9379-7c96f9d31bb0")
       .then(res => res.json())
       .then(data => {
-        // Ordenar por fecha ascendente (columna FECHA)
         data.sort((a, b) => new Date(a.FECHA) - new Date(b.FECHA));
 
         const tbody = document.querySelector("#tablaDenuncias tbody");
         const select = document.getElementById('denunciaRef');
 
         data.forEach(row => {
-          // Cargar tabla
           const tr = document.createElement("tr");
           tr.innerHTML = `
             <td>${row.FECHA || ""}</td>
@@ -187,13 +183,19 @@
           `;
           tbody.appendChild(tr);
 
-          // Cargar desplegable con código + socio
           if(row.CODIGO && row.SOCIO){
             const option = document.createElement('option');
-            option.value = row.CODIGO; // se guarda el código como valor
+            option.value = row.CODIGO;
             option.textContent = `${row.CODIGO} — ${row.SOCIO}`;
+            option.dataset.socio = row.SOCIO;
             select.appendChild(option);
           }
+        });
+
+        // Completar automáticamente el campo SOCIO al seleccionar una denuncia
+        select.addEventListener('change', function() {
+          const socioSeleccionado = select.options[select.selectedIndex].dataset.socio;
+          document.querySelector('input[name="SOCIO"]').value = socioSeleccionado || "";
         });
       });
 
